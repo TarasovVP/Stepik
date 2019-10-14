@@ -3,7 +3,6 @@ package com.vptarasov.stepik
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,9 +25,16 @@ class MainActivity : AppCompatActivity() {
             Logger.getLogger(MainActivity::class.java.name).warning("Numbers $k")
         }*/
 
+        val addBigNumerals = BigNumeral()
+        val firstNumber = "13273269708705650734211312160963364392368945816"
+        val secondNumber = "13273269708705650734211312160963364392368945816"
+        val doubleOfSum = firstNumber.toDouble() + secondNumber.toDouble()
 
+        val input = generateSequence(::readLine)
+        val lines = input.toList()
 
-
+        println("result " + addBigNumerals.getFirstNineDigits(doubleOfSum))
+        println("result " + addBigNumerals.getFirstNineDigits(doubleOfSum))
 
     }
 
