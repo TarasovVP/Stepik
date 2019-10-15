@@ -1,6 +1,12 @@
 package com.vptarasov.stepik
 
+import java.util.*
+import kotlin.collections.ArrayList
+
 class Collections {
+
+    val intList: MutableList<Int> = ArrayList()
+    var totalNum = 0
 
     fun deleteCopies(inputList: List<String>): List<String> {
         val listOfUsers = inputList.toSet()
@@ -44,6 +50,46 @@ class Collections {
     fun getAnagram(s1: String, s2: String): Boolean {
 
         return getNumericalValue(s1) == getNumericalValue(s2)
+    }
+
+    fun findSubstrings(text: String, substring: String) : MutableList<Int>{
+
+        val num = text.indexOf(substring)
+        if (num != -1){
+            totalNum += num
+            intList.add(totalNum)
+            totalNum += substring.length
+            findSubstrings(text.substring(num+substring.length), substring)
+        }else {
+            return intList
+        }
+        return intList
+    }
+
+    fun lexicographicOrder(){
+        //val input = arrayOf(2, 3, 5, 7, 11, 13, 17, 19)
+        val input = arrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+       /* for (i in 0..4){
+            Arrays.sort(input) { o1, o2 -> o1!!.toString().compareTo(o2!!.toString()) }
+        }
+
+        print(input.joinToString { "" })*/
+
+        val sarr = arrayOfNulls<String>(input.size)
+        // convent the array to a String array
+        for (i in sarr.indices) {
+            sarr[i] = input[i].toString()
+        }
+        // sort the String array (descending lexicographical order)
+        Arrays.sort(sarr)
+        // assign the sorted String array back to the input int array in reverse order
+        for (i in sarr.indices) {
+            input[i] = Integer.parseInt(sarr[sarr.size - 1 - i])
+        }
+
+        print((input.toString()))
+
     }
 
 }

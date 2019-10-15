@@ -15,6 +15,8 @@ class CollectionsTest {
     lateinit var s4: String
     lateinit var s5: String
     lateinit var s6: String
+    lateinit var string: String
+    lateinit var subString: String
 
     @Before
     fun setUp() {
@@ -27,6 +29,8 @@ class CollectionsTest {
         s4 = "Лорд Волан де Морт"
         s5 = "ф"
         s6 = "ф"
+        string = "абракадабрабракадабраабракадабра1абракадабра11111111111абракадабра22абракадабра20202020202020202020абракадабра"
+        subString = "абракадабра"
     }
 
     @Test
@@ -75,4 +79,16 @@ class CollectionsTest {
         Assert.assertEquals("AssertFindAnagrams", findAnagramTest, true)
     }
 
+    @Test
+    fun findSubstrings(){
+        val intList = collections?.findSubstrings(string, subString)
+
+        Assert.assertEquals("AssertFindSubstrings", intList?.get(0), 0)
+        Assert.assertEquals("AssertFindSubstrings", intList?.get(1), 21)
+    }
+
+    @Test
+    fun lexicographicOrder(){
+        collections?.lexicographicOrder()
+    }
 }
