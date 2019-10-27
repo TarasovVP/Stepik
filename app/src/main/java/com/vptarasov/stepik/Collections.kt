@@ -27,7 +27,7 @@ class Collections {
                 } else {
                     listUsersByChar?.add(i)
                 }
-            }else{
+            } else {
                 listUsersByChar = ArrayList()
                 listUsersByChar.add(i)
                 listOfUsersSorted.add(listUsersByChar)
@@ -52,44 +52,132 @@ class Collections {
         return getNumericalValue(s1) == getNumericalValue(s2)
     }
 
-    fun findSubstrings(text: String, substring: String) : MutableList<Int>{
+    fun findSubstrings(text: String, substring: String): MutableList<Int> {
 
         val num = text.indexOf(substring)
-        if (num != -1){
+        if (num != -1) {
             totalNum += num
             intList.add(totalNum)
             totalNum += substring.length
-            findSubstrings(text.substring(num+substring.length), substring)
-        }else {
+            findSubstrings(text.substring(num + substring.length), substring)
+        } else {
             return intList
         }
         return intList
     }
 
-    fun lexicographicOrder(){
-        //val input = arrayOf(2, 3, 5, 7, 11, 13, 17, 19)
-        val input = arrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    /*fun lexicographicOrder(array: Array<Int>): Array<Int?> {
+        val input = array
 
-       /* for (i in 0..4){
-            Arrays.sort(input) { o1, o2 -> o1!!.toString().compareTo(o2!!.toString()) }
+        var k = 0
+        var l = 0
+
+        for (i in input.indices) {
+            if (i < input.size-1) {
+                if (input[i] < input[i + 1]) {
+                    k = i
+                } else {
+                    break
+                }
+            }
+
         }
 
-        print(input.joinToString { "" })*/
-
-        val sarr = arrayOfNulls<String>(input.size)
-        // convent the array to a String array
-        for (i in sarr.indices) {
-            sarr[i] = input[i].toString()
-        }
-        // sort the String array (descending lexicographical order)
-        Arrays.sort(sarr)
-        // assign the sorted String array back to the input int array in reverse order
-        for (i in sarr.indices) {
-            input[i] = Integer.parseInt(sarr[sarr.size - 1 - i])
+        for (i in input.indices) {
+            if (input[k] < input[i]) {
+                l = i
+            }
         }
 
-        print((input.toString()))
+        val temp: Int
+        temp = input[k]
+        input[k] = input[l]
+        input[l] = temp
+
+        val arrLeft : Array<Int?> = arrayOfNulls(k)
+        for (i in 0 until k){
+            arrLeft[i] = input[i]
+        }
+
+        var index = 0
+        val arrRight: Array<Int?> = arrayOfNulls(input.size-k)
+        for (i in input.lastIndex downTo k){
+            arrRight[index] = input[i]
+            index++
+        }
+
+        return arrLeft + arrRight
 
     }
+*/
+    fun lexicographicOrder(seq: IntArray): IntArray? {
+        var i = seq.size - 1
+        var j = seq.size - 1
+        while (i > 0 && seq[i] <= seq[i - 1])
+            i--
+        if (i == 0)
+            return null
+        while (seq[j] <= seq[i - 1])
+            j--
+        var temp = seq[i - 1]
+        seq[i - 1] = seq[j]
+        seq[j] = temp
+        j = seq.size - 1
+        while (i < j) {
+            temp = seq[i]
+            seq[i] = seq[j]
+            seq[j] = temp
+            i++
+            j--
+        }
+        return seq
+    }
+
+    fun getNextPermutation(seq: IntArray, num: Int): String?{
+        var finalArr = seq
+
+        for (i in 0 until num){
+            finalArr = lexicographicOrder(finalArr)!!
+        }
+
+        return finalArr.joinToString("", "", "")
+    }
+
+    fun averageMedian(arr: DoubleArray): String{
+
+        val str = "1.0 2.0 3.0 4.0"
+        val array = str.split(" ")
+        var arr = DoubleArray(array.size)
+
+        var index = 0
+        for (i in array){
+            arr[index] = i.toDouble()
+            index++
+        }
+
+
+        var doubleResult = 0.0
+
+        for (i in arr){
+            doubleResult += i
+        }
+
+        doubleResult /= arr.size
+
+
+        Arrays.sort(arr)
+        val median: Double
+        if (arr.size % 2 == 0)
+            median =
+                (arr[arr.size / 2] + arr[arr.size / 2 - 1]) / 2
+        else
+            median = arr[arr.size / 2]
+
+        return "$doubleResult $median"
+
+    }
+
+
+
 
 }

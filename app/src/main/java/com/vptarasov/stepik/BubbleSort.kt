@@ -5,7 +5,7 @@ class BubbleSort {
     fun getIntArray(listS: List<String>): IntArray{
 
         val intArr = IntArray(listS.size)
-        for (i in 0 until listS.size) {
+        for (i in listS.indices) {
             intArr[i] = listS[i].toInt()
         }
         return intArr

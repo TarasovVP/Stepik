@@ -1,6 +1,6 @@
 package com.vptarasov.stepik
 
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -44,7 +44,7 @@ class CollectionsTest {
         listActual.add("Peter")
         listActual.add("Jack")
 
-        Assert.assertEquals("AssertDeleteCopies", result, listActual)
+        assertEquals("AssertDeleteCopies", result, listActual)
     }
 
     @Test
@@ -65,7 +65,7 @@ class CollectionsTest {
             println(i.toString().substring(1, i.toString().length-1).replace(",", ""))
         }
 
-        Assert.assertEquals("AssertDeleteCopies", resultAlphaBet, listActualAlphaBet)
+        assertEquals("AssertDeleteCopies", resultAlphaBet, listActualAlphaBet)
     }
 
     @Test
@@ -74,21 +74,38 @@ class CollectionsTest {
         val findAnagramCyrill = collections?.getAnagram(s3, s4)
         val findAnagramTest = collections?.getAnagram(s5, s6)
 
-        Assert.assertEquals("AssertFindAnagrams", findAnagram, true)
-        Assert.assertEquals("AssertFindAnagrams", findAnagramCyrill, true)
-        Assert.assertEquals("AssertFindAnagrams", findAnagramTest, true)
+        assertEquals("AssertFindAnagrams", findAnagram, true)
+        assertEquals("AssertFindAnagrams", findAnagramCyrill, true)
+        assertEquals("AssertFindAnagrams", findAnagramTest, true)
     }
 
     @Test
     fun findSubstrings(){
         val intList = collections?.findSubstrings(string, subString)
 
-        Assert.assertEquals("AssertFindSubstrings", intList?.get(0), 0)
-        Assert.assertEquals("AssertFindSubstrings", intList?.get(1), 21)
+        assertEquals("AssertFindSubstrings", intList?.get(0), 0)
+        assertEquals("AssertFindSubstrings", intList?.get(1), 21)
     }
 
     @Test
     fun lexicographicOrder(){
-        collections?.lexicographicOrder()
+        val input = intArrayOf(1, 2, 3, 4)
+        val inputSecond = intArrayOf(1, 2, 4, 3)
+        val inputStepik = intArrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+        val finalArray = collections?.getNextPermutation(input, 1)
+        val finalArraySecond = collections?.getNextPermutation(inputSecond, 1)
+        val finalArrayStepik = collections?.getNextPermutation(inputStepik, 999993)
+        assertEquals("AssertlexicographicOrder", finalArray, "1243")
+        assertEquals("AssertlexicographicOrderSecond", finalArraySecond, "1324")
+        assertEquals("AssertlexicographicOrderStepik", finalArrayStepik, "2783914560")
+
+    }
+
+    @Test
+    fun averageMedian(){
+        val arr = doubleArrayOf(1.0, 2.0, 3.0, 4.0)
+        val result = collections?.averageMedian(arr)
+
+        assertEquals("AssertAverageMedian", result, "2.5 2.5")
     }
 }
