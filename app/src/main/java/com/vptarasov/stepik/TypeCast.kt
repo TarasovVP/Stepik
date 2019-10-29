@@ -58,7 +58,7 @@ class TypeCast {
         return result
     }
 
-    fun calculate(listOfElements: ArrayList<String>): String {
+    fun calculate(listOfElements: MutableList<String>): String {
         var result = ""
 
         val listOfElements = doMultiply(listOfElements)
@@ -75,7 +75,7 @@ class TypeCast {
         return result
     }
 
-    private fun doMultiply(listOfElements: ArrayList<String>): ArrayList<String> {
+    private fun doMultiply(listOfElements: MutableList<String>): MutableList<String> {
         for (i in listOfElements.indices) {
             if (i % 2 != 0 && "*" == listOfElements[i]) {
                 val result = mathReuslt(
@@ -137,12 +137,59 @@ class TypeCast {
                 for (i in 1..(lastIndex - firstIndex)) {
                     listOfElements.removeAt(firstIndex + 1)
                 }
+                result = calculate(listOfElements)
             }
-
-
         }
         return result
 
     }
 
+    fun fromParenthisToResult(listOfElements: MutableList<String>): String {
+
+        listOfElements[0] = listOfElements[0].replace("(", "")
+        listOfElements[listOfElements.size - 1] =
+            listOfElements[listOfElements.size - 1].replace(")", "")
+
+        return calculate(listOfElements)
+    }
+
+    fun getNewArray(listOfElements: ArrayList<String>): MutableList<String> {
+
+
+        val listSize = listOfElements.size
+        val firstElement = listOfElements.indexOf(listOfElements.last { it.contains("(") })
+        val firstSubList = listOfElements.subList(firstElement, listSize)
+        val lastElement = firstSubList.indexOf(listOfElements.first() { it.contains(")") })
+        val secondSubList = firstSubList.subList(0, lastElement + 1)
+        val resultString = fromParenthisToResult(secondSubList)
+
+        val rightSubList = firstSubList.subList(secondSubList.size, firstSubList.size)
+
+
+        var finalList = mutableListOf<String>()
+        if (firstElement != 0){
+            finalList = listOfElements.subList(0, firstElement)
+        }
+        if (resultString != ""){
+            finalList = (finalList + resultString).toMutableList()
+        }
+        if (rightSubList.size != 0){
+            finalList = (finalList + rightSubList).toMutableList()
+        }
+
+        return finalList
+    }
+
+    fun getResultCalculation(listOfElements: ArrayList<String>): String{
+
+        var newArray = listOfElements
+
+        while (newArray.any { it.contains("(") } && newArray.any { it.contains(")") }){
+            newArray = getNewArray(newArray) as ArrayList<String>
+        }
+
+        val result = calculate(newArray)
+
+        return result
+    }
 }
