@@ -77,7 +77,7 @@ class TypeCast {
 
     private fun doMultiply(listOfElements: MutableList<String>): MutableList<String> {
         for (i in listOfElements.indices) {
-            if (i % 2 != 0 && "*" == listOfElements[i]) {
+            if (i % 2 != 0 && "*" == listOfElements[i] || "/" == listOfElements[i]) {
                 val result = mathReuslt(
                     listOfElements[i - 1],
                     listOfElements[i + 1],
@@ -96,19 +96,19 @@ class TypeCast {
     private fun mathReuslt(leftDigit: String, rightDigit: String, operator: String): String {
         var result = ""
         when (operator) {
-            "+" -> result = (leftDigit.toInt() + rightDigit.toInt()).toString()
-            "-" -> result = (leftDigit.toInt() - rightDigit.toInt()).toString()
-            "*" -> result = (leftDigit.toInt() * rightDigit.toInt()).toString()
+            "+" -> result = (leftDigit.toDouble() + rightDigit.toDouble()).toString()
+            "-" -> result = (leftDigit.toDouble() - rightDigit.toDouble()).toString()
+            "*" -> result = (leftDigit.toDouble() * rightDigit.toDouble()).toString()
             "/" -> result = (leftDigit.toDouble() / rightDigit.toDouble()).toString()
         }
         return result
     }
 
     fun checkIntOrDouble(element: String): String {
-        return if (element.contains(".")) {
-            element.toDouble().toString()
+        if (element.contains(".")) {
+            return element.toDouble().toString()
         } else {
-            element.toInt().toString()
+            return element.toInt().toString()
         }
     }
 
@@ -190,6 +190,6 @@ class TypeCast {
 
         val result = calculate(newArray)
 
-        return result
+        return String.format("%.3f", result.toDouble()).toDouble().toString()
     }
 }
